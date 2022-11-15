@@ -2,6 +2,8 @@
 
 import { FC, useState } from "react";
 import styles from "./Piano.module.css";
+import { getChordProgression } from "./helpers/getChordProgression";
+import { Progressions } from "./constants/progressions";
 
 const pianoKeys = [
   { key: "C", color: "white", label: "C" },
@@ -44,10 +46,7 @@ const PianoOctave: FC<Props> = ({ octave, highlightedKeys }) => {
   );
 };
 
-const aProgression = [
-  ["C3", "E3", "G3"],
-  ["G3", "B3", "D4"],
-];
+const cProgression = getChordProgression("C", Progressions["I-V-vi-IV"], 3);
 
 const buttonClass =
   "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded";
@@ -57,7 +56,23 @@ const iconClass =
 
 export const Piano = () => {
   const [progressionIndex, setProgressionIndex] = useState(0);
-  const progression = aProgression[progressionIndex];
+  const progression = cProgression[progressionIndex];
+
+  const progressionButtons = cProgression.map((progression, index) => {
+    return (
+      <button
+        className={
+          iconClass +
+          " " +
+          (index === progressionIndex ? " border-2 border-black" : "")
+        }
+        onClick={() => setProgressionIndex(index)}
+        key={index}
+      >
+        {progression.label}
+      </button>
+    );
+  });
 
   const onPrevious = () => {
     if (progressionIndex === 0) {
@@ -67,7 +82,7 @@ export const Piano = () => {
   };
 
   const onNext = () => {
-    if (progressionIndex === aProgression.length - 1) {
+    if (progressionIndex === cProgression.length - 1) {
       return;
     }
     setProgressionIndex(progressionIndex + 1);
@@ -76,10 +91,10 @@ export const Piano = () => {
   return (
     <div className="flex flex-col">
       <div>
-        <PianoOctave octave={1} highlightedKeys={progression} />
-        <PianoOctave octave={2} highlightedKeys={progression} />
-        <PianoOctave octave={3} highlightedKeys={progression} />
-        <PianoOctave octave={4} highlightedKeys={progression} />
+        <PianoOctave octave={1} highlightedKeys={progression.progression} />
+        <PianoOctave octave={2} highlightedKeys={progression.progression} />
+        <PianoOctave octave={3} highlightedKeys={progression.progression} />
+        <PianoOctave octave={4} highlightedKeys={progression.progression} />
       </div>
       <div className="flex justify-center gap-4">
         <button className={buttonClass} onClick={onPrevious}>
@@ -90,12 +105,7 @@ export const Piano = () => {
         </button>
       </div>
       <div className="mb-4" />
-      <div className="flex justify-center gap-2">
-        <button className={iconClass + ` border-2 border-black`}>I</button>
-        <button className={iconClass}>V</button>
-        <button className={iconClass}>vi</button>
-        <button className={iconClass}>IV</button>
-      </div>
+      <div className="flex justify-center gap-2">{progressionButtons}</div>
     </div>
   );
 };

@@ -57,43 +57,62 @@ const minorChords: Record<Note, Chord> = {
   B: ["B", "D", "F#"],
 };
 
+type ChordWithOctave = [
+  `${Note}${number}`,
+  `${Note}${number}`,
+  `${Note}${number}`
+];
+
+type ChordProgression = { label: string; progression: ChordWithOctave }[];
+
 const getChord2 = (
   key: Key,
   chordType: "major" | "minor",
-  note: number
-): Chord => {
+  note: number,
+  octave: number
+): ChordWithOctave => {
   const keyIndex = keys.indexOf(key);
   const chordKey = keys[(keyIndex + note) % 7];
 
   if (chordType === "major") {
-    return majorChords[chordKey];
+    return majorChords[chordKey].map(
+      (note) => `${note}${octave}`
+    ) as ChordWithOctave;
   } else {
-    return minorChords[chordKey];
+    return minorChords[chordKey].map(
+      (note) => `${note}${octave}`
+    ) as ChordWithOctave;
   }
 };
 
 export const getChordProgression = (
   key: Key,
-  progression: string[]
-): Chord[] => {
-  return progression.map((chord) => {
+  progression: string[],
+  octave: number
+): ChordProgression => {
+  const results: [string, ChordWithOctave][] = progression.map((chord) => {
     switch (chord) {
       case "I":
-        return getChord2(key, "major", 0);
+        return ["I", getChord2(key, "major", 0, octave)];
       case "ii":
-        return getChord2(key, "minor", 1);
+        return ["ii", getChord2(key, "minor", 1, octave)];
       case "iii":
-        return getChord2(key, "minor", 2);
+        return ["iii", getChord2(key, "minor", 2, octave)];
       case "IV":
-        return getChord2(key, "major", 3);
+        return ["IV", getChord2(key, "major", 3, octave)];
       case "V":
-        return getChord2(key, "major", 4);
+        return ["V", getChord2(key, "major", 4, octave)];
       case "vi":
-        return getChord2(key, "minor", 5);
+        return ["vi", getChord2(key, "minor", 5, octave)];
       case "vii":
-        return getChord2(key, "minor", 6);
+        return ["vii", getChord2(key, "minor", 6, octave)];
       default:
-        return getChord2(key, "major", 0);
+        return ["I", getChord2(key, "major", 0, octave)];
     }
   });
+
+  return results.map(([label, progression]) => ({
+    label: label,
+    progression: progression,
+  }));
 };
