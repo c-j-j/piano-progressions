@@ -1,3 +1,9 @@
+@tailwind components;
+
+.foo {
+    @apply bg-red-500;
+}
+
 .container {
   padding: 0 2rem;
 }

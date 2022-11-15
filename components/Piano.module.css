@@ -1,0 +1,93 @@
+.piano {
+    position: relative;
+    width: 350px;
+    height: 200px;
+    display: inline-block;
+}
+
+.key {
+    display: inline-block;
+    border: 1px solid black;
+}
+
+.highlighted {
+    border: 3px solid red;
+}
+
+.C {
+    left: 0;
+}
+
+.Csharp {
+    left: 35px;
+}
+
+.D {
+    left: 50px;
+}
+
+.Dsharp {
+    left: 85px;
+}
+
+.E {
+    left: 100px;
+}
+
+.F {
+    left: 150px;
+}
+
+.Fsharp {
+    left: 185px;
+}
+
+.G {
+    left: 200px;
+}
+
+.Gsharp {
+    left: 235px;
+}
+
+.A {
+    left: 250px;
+}
+
+.Asharp {
+    left: 285px;
+}
+
+.B {
+    left: 300px;
+}
+
+.white {
+    background-color: white;
+    width: 50px;
+    height: 150px;
+    position: absolute;
+    display: inline-block;
+    border: 1px solid black;
+}
+
+.black {
+    background-color: black;
+    width: 30px;
+    height: 90px;
+    position: absolute;
+    display: inline-block;
+    z-index: 1;
+}
+
+.octave a {
+    left: 0;
+}
+
+.octave b {
+    left: 350px;
+}
+
+.octave c {
+    left: 700px;
+}
