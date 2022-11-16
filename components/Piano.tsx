@@ -3,7 +3,7 @@
 import { FC, useState } from "react";
 import styles from "./Piano.module.css";
 import { getChordProgression } from "./helpers/getChordProgression";
-import { Progressions } from "./constants/progressions";
+import { Progression, Progressions } from "./constants/progressions";
 
 const pianoKeys = [
   { key: "C", color: "white", label: "C" },
@@ -46,17 +46,18 @@ const PianoOctave: FC<Props> = ({ octave, highlightedKeys }) => {
   );
 };
 
-const cProgression = getChordProgression("C", Progressions["I-V-vi-IV"], 3);
-
 const buttonClass =
   "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded";
 
 const iconClass =
   "bg-yellow-600 text-white p-2 rounded-full h-8 w-8 flex justify-center items-center";
 
-export const Piano = () => {
+export const Piano: FC<{ progression: Progression }> = ({ progression }) => {
+  console.log("PPPP", progression);
+  const cProgression = getChordProgression("C", Progressions[progression], 3);
+
   const [progressionIndex, setProgressionIndex] = useState(0);
-  const progression = cProgression[progressionIndex];
+  const bprogression = cProgression[progressionIndex];
 
   const progressionButtons = cProgression.map((progression, index) => {
     return (
@@ -91,10 +92,10 @@ export const Piano = () => {
   return (
     <div className="flex flex-col">
       <div>
-        <PianoOctave octave={1} highlightedKeys={progression.progression} />
-        <PianoOctave octave={2} highlightedKeys={progression.progression} />
-        <PianoOctave octave={3} highlightedKeys={progression.progression} />
-        <PianoOctave octave={4} highlightedKeys={progression.progression} />
+        <PianoOctave octave={1} highlightedKeys={bprogression.progression} />
+        <PianoOctave octave={2} highlightedKeys={bprogression.progression} />
+        <PianoOctave octave={3} highlightedKeys={bprogression.progression} />
+        <PianoOctave octave={4} highlightedKeys={bprogression.progression} />
       </div>
       <div className="flex justify-center gap-4">
         <button className={buttonClass} onClick={onPrevious}>
