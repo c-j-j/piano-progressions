@@ -116,7 +116,6 @@ export const Piano: FC<{ progression: Progression }> = ({ progression }) => {
       </div>
       <div className="mb-8" />
       <div>
-        <PianoOctave octave={1} highlightedKeys={bprogression.progression} />
         <PianoOctave octave={2} highlightedKeys={bprogression.progression} />
         <PianoOctave octave={3} highlightedKeys={bprogression.progression} />
         <PianoOctave octave={4} highlightedKeys={bprogression.progression} />
