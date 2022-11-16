@@ -1,7 +1,22 @@
 import Link from "next/link";
 import { Progression } from "../components/constants/progressions";
+import { FC } from "react";
 
-const progression: Progression = "I-V-vi-IV";
+const Card: FC<{
+  progression: string;
+  progressionKey: string;
+  chords: string;
+}> = ({ progression, progressionKey, chords }) => (
+  <div className="bg-white p-4 rounded">
+    <h3 className="text-1xl font-bold text-blue-600">{progression}</h3>
+    <p>
+      <span className="font-bold">Key</span>: {progressionKey}
+    </p>
+    <p>
+      <span className="font-bold">Chords</span>: {chords}
+    </p>
+  </div>
+);
 
 export default function Home() {
   return (
@@ -9,19 +24,22 @@ export default function Home() {
       <div>
         <h2 className="text-3xl font-bold">Most Popular Progressions</h2>
         <div className="mb-4"></div>
-        <Link href={`/progression/${progression}`}>
-          <div className="bg-white p-4 inline-block rounded">
-            <h3 className="text-1xl font-bold text-blue-600">I-V-vi-IV</h3>
-            <p>
-              <span className="font-bold">Key</span>: C Major
-            </p>
-            <p>
-              <span className="font-bold">Chords</span>: C, G, Am, F
-            </p>
-            <p>
-              <span className="font-bold">Mood:</span>: Happy, Sad, Romantic,
-            </p>
-          </div>
+        <Link href={`/progression/${"I-V-vi-IV" as Progression}`}>
+          <Card
+            progression="I-V-vi-IV"
+            progressionKey="C Major"
+            chords="C G Am F"
+          />
+        </Link>
+        <div className="mb-4"></div>
+
+        <Link href={`/progression/${"ii-V-I" as Progression}`}>
+          <Card progression="ii-V-I" progressionKey="C Major" chords="Dm G C" />
+        </Link>
+        <div className="mb-4"></div>
+
+        <Link href={`/progression/${"I-IV-V" as Progression}`}>
+          <Card progression="I-IV-V" progressionKey="C Major" chords="C F G" />
         </Link>
       </div>
     </div>
