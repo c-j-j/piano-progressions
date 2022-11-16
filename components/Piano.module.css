@@ -10,10 +10,6 @@
     border: 1px solid black;
 }
 
-.highlighted {
-    border: 3px solid red;
-}
-
 .C {
     left: 0;
 }
@@ -78,16 +74,4 @@
     position: absolute;
     display: inline-block;
     z-index: 1;
-}
-
-.octave a {
-    left: 0;
-}
-
-.octave b {
-    left: 350px;
-}
-
-.octave c {
-    left: 700px;
 }
