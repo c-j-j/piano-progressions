@@ -11,7 +11,7 @@ export default function Home() {
         <div className="mb-4"></div>
         <Link href={`/progression/${progression}`}>
           <div className="bg-white p-4 inline-block rounded">
-            <h3 className="text-1xl font-bold">I-V-vi-IV</h3>
+            <h3 className="text-1xl font-bold text-blue-600">I-V-vi-IV</h3>
             <p>
               <span className="font-bold">Key</span>: C Major
             </p>
