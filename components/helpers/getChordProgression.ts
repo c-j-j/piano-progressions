@@ -16,13 +16,16 @@ const notes = [
 ] as const;
 type Note = typeof notes[number];
 
-type ChordWithOctave = [
+export type ChordWithOctave = [
   `${Note}${number}`,
   `${Note}${number}`,
   `${Note}${number}`
 ];
 
-type ChordProgression = { label: string; progression: ChordWithOctave }[];
+export type ChordProgression = {
+  label: string;
+  progression: ChordWithOctave;
+}[];
 
 export function getScale(key: Key): Note[] {
   const startIndex = notes.findIndex((note) => note === key);

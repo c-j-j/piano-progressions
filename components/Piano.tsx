@@ -4,6 +4,8 @@ import { FC, useState } from "react";
 import styles from "./Piano.module.css";
 import { getChordProgression } from "./helpers/getChordProgression";
 import { Progression, Progressions } from "./constants/progressions";
+import { invertChordInProgressionUp } from "./helpers/invertChordInProgressionUp";
+import { invertChordInProgressionDown } from "./helpers/invertChordInProgressionDown";
 
 const pianoKeys = [
   { key: "C", color: "white", label: "C" },
@@ -53,13 +55,14 @@ const iconClass =
   "bg-yellow-600 text-white p-2 rounded-full h-8 w-8 flex justify-center items-center";
 
 export const Piano: FC<{ progression: Progression }> = ({ progression }) => {
-  console.log("PPPP", progression);
-  const cProgression = getChordProgression("C", Progressions[progression], 3);
+  const [currentProgression, setCurrentProgression] = useState(
+    getChordProgression("C", Progressions[progression], 3)
+  );
 
   const [progressionIndex, setProgressionIndex] = useState(0);
-  const bprogression = cProgression[progressionIndex];
+  const bprogression = currentProgression[progressionIndex];
 
-  const progressionButtons = cProgression.map((progression, index) => {
+  const progressionButtons = currentProgression.map((progression, index) => {
     return (
       <button
         className={
@@ -83,14 +86,35 @@ export const Piano: FC<{ progression: Progression }> = ({ progression }) => {
   };
 
   const onNext = () => {
-    if (progressionIndex === cProgression.length - 1) {
+    if (progressionIndex === currentProgression.length - 1) {
       return;
     }
     setProgressionIndex(progressionIndex + 1);
   };
 
+  const onInvertCurrentUp = () => {
+    setCurrentProgression(
+      invertChordInProgressionUp(currentProgression, progressionIndex)
+    );
+  };
+
+  const onInvertCurrentDown = () => {
+    setCurrentProgression(
+      invertChordInProgressionDown(currentProgression, progressionIndex)
+    );
+  };
+
   return (
     <div className="flex flex-col">
+      <div className="flex justify-center gap-4">
+        <button className={buttonClass} onClick={onInvertCurrentDown}>
+          Invert Chord Down
+        </button>
+        <button className={buttonClass} onClick={onInvertCurrentUp}>
+          Invert Chord Up
+        </button>
+      </div>
+      <div className="mb-8" />
       <div>
         <PianoOctave octave={1} highlightedKeys={bprogression.progression} />
         <PianoOctave octave={2} highlightedKeys={bprogression.progression} />
